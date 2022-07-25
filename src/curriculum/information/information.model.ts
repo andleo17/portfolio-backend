@@ -1,4 +1,5 @@
 import { Field, ID, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { InstitutionModel } from 'curriculum/institution/institution.model';
 
 @ObjectType('Information')
 export class InformationModel {
@@ -23,11 +24,11 @@ export class InformationModel {
   @Field({ nullable: true })
   endDate?: Date;
 
-  @Field({ nullable: true })
+  @Field(() => InstitutionModel, { nullable: true })
   institution?: string;
 
   @Field({ nullable: true })
-  institutionUrl?: string;
+  institutionId?: string;
 
   @Field(() => Int, { nullable: true })
   level?: number;
@@ -66,10 +67,7 @@ export class CreateInformationInput {
   endDate?: Date;
 
   @Field({ nullable: true })
-  institution?: string;
-
-  @Field({ nullable: true })
-  institutionUrl?: string;
+  institutionId?: string;
 
   @Field(() => Int, { nullable: true })
   level?: number;
@@ -105,10 +103,7 @@ export class UpdateInformationInput {
   endDate?: Date;
 
   @Field({ nullable: true })
-  institution?: string;
-
-  @Field({ nullable: true })
-  institutionUrl?: string;
+  institutionId?: string;
 
   @Field(() => Int, { nullable: true })
   level?: number;

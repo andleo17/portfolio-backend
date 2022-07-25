@@ -1,10 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { Information, Prisma } from '@prisma/client';
+import { Information, Institution, Prisma } from '@prisma/client';
 import { PrismaService } from 'database/sqlite/prisma.service';
 
 @Injectable()
 export class InformationService {
   constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Get the institution information from the information.
+   *
+   * @param id The information id.
+   * @returns The institution information.
+   **/
+  async getInstitution(id: string): Promise<Institution> {
+    return this.prisma.information.findUnique({ where: { id } }).institution();
+  }
 
   /**
    * Get the information from category on the database.

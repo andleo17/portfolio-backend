@@ -48,19 +48,26 @@ model InfoCategory {
 }
 
 model Information {
-  id             String       @id @default(cuid())
-  category       InfoCategory @relation(fields: [categoryId], references: [id])
-  categoryId     String
-  city           String?
-  content        String
-  country        String?
-  description    String?
-  endDate        DateTime?
-  institution    String?
-  institutionUrl String?
-  level          Int?
-  startDate      DateTime?
-  state          Boolean      @default(true)
-  order          Int?
-  url            String?
+  id            String       @id @default(cuid())
+  category      InfoCategory @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  city          String?
+  content       String
+  country       String?
+  description   String?
+  endDate       DateTime?
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  institutionId String?
+  level         Int?
+  startDate     DateTime?
+  state         Boolean      @default(true)
+  order         Int?
+  url           String?
+}
+
+model Institution {
+  id          String        @id @default(cuid())
+  information Information[]
+  name        String
+  url         String?
 }

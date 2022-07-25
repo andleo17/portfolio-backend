@@ -1,4 +1,12 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+  Root,
+} from '@nestjs/graphql';
+import { InstitutionModel } from 'curriculum/institution/institution.model';
 import {
   CreateInformationInput,
   InformationModel,
@@ -9,6 +17,13 @@ import { InformationService } from './information.service';
 @Resolver(InformationModel)
 export class InformationResolver {
   constructor(private readonly informationService: InformationService) {}
+
+  @ResolveField(() => InstitutionModel, { nullable: true })
+  async institution(
+    @Root() { id }: InformationModel,
+  ): Promise<InstitutionModel> {
+    return this.informationService.getInstitution(id);
+  }
 
   @Query(() => [InformationModel])
   async getInformations(

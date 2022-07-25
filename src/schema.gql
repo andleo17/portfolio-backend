@@ -16,12 +16,16 @@ input CreateInformationInput {
   country: String
   description: String
   endDate: DateTime
-  institution: String
-  institutionUrl: String
+  institutionId: String
   level: Int
   order: Int
   startDate: DateTime
   state: Boolean
+  url: String
+}
+
+input CreateInstitutionInput {
+  name: String!
   url: String
 }
 
@@ -68,8 +72,8 @@ type Information {
   description: String
   endDate: DateTime
   id: ID!
-  institution: String
-  institutionUrl: String
+  institution: Institution
+  institutionId: String
   level: Int
   order: Int
   startDate: DateTime
@@ -77,16 +81,25 @@ type Information {
   url: String
 }
 
+type Institution {
+  id: ID!
+  name: String!
+  url: String
+}
+
 type Mutation {
   createInfoCategory(input: CreateInfoCategoryInput!): InfoCategory!
   createInformation(input: CreateInformationInput!): Information!
+  createInstitution(input: CreateInstitutionInput!): Institution!
   createProfile(input: CreateProfileInput!): Profile!
   createSocial(input: CreateSocialInput!): Social!
   deleteInfoCategory(id: String!): InfoCategory
   deleteInformation(id: String!): Information
+  deleteInstitution(id: String!): Institution
   deleteSocial(id: String!): Social
   updateInfoCategory(id: String!, input: UpdateInfoCategoryInput!): InfoCategory
   updateInformation(id: String!, input: UpdateInformationInput!): Information
+  updateInstitution(id: String!, input: UpdateInstitutionInput!): Institution
   updateProfile(input: UpdateProfileInput!): Profile!
   updateSocial(id: String!, input: UpdateSocialInput!): Social
 }
@@ -107,6 +120,7 @@ type Profile {
 
 type Query {
   getInformations(categoryId: String!): [Information!]!
+  getInstitutions: [Institution!]!
   infoCategories: [InfoCategory!]!
   profile: Profile!
   socials: [Social!]!
@@ -136,11 +150,15 @@ input UpdateInformationInput {
   country: String
   description: String
   endDate: DateTime
-  institution: String
-  institutionUrl: String
+  institutionId: String
   level: Int
   startDate: DateTime
   state: Boolean
+  url: String
+}
+
+input UpdateInstitutionInput {
+  name: String
   url: String
 }
 
