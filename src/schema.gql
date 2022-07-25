@@ -1,0 +1,165 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateInfoCategoryInput {
+  icon: String
+  name: String!
+  order: Int
+  state: Boolean
+}
+
+input CreateInformationInput {
+  categoryId: String!
+  city: String
+  content: String!
+  country: String
+  description: String
+  endDate: DateTime
+  institution: String
+  institutionUrl: String
+  level: Int
+  order: Int
+  startDate: DateTime
+  state: Boolean
+  url: String
+}
+
+input CreateProfileInput {
+  city: String!
+  country: String!
+  description: String!
+  email: String!
+  image: String
+  name: String!
+  phone: String!
+  portfolio: String
+}
+
+input CreateSocialInput {
+  icon: String!
+  label: String!
+  name: String!
+  order: Int
+  state: Boolean
+  url: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type InfoCategory {
+  icon: String
+  id: ID!
+  information: [Information!]
+  name: String!
+  order: Int
+  profileId: Int!
+  state: Boolean!
+}
+
+type Information {
+  categoryId: String!
+  city: String
+  content: String!
+  country: String
+  description: String
+  endDate: DateTime
+  id: ID!
+  institution: String
+  institutionUrl: String
+  level: Int
+  order: Int
+  startDate: DateTime
+  state: Boolean!
+  url: String
+}
+
+type Mutation {
+  createInfoCategory(input: CreateInfoCategoryInput!): InfoCategory!
+  createInformation(input: CreateInformationInput!): Information!
+  createProfile(input: CreateProfileInput!): Profile!
+  createSocial(input: CreateSocialInput!): Social!
+  deleteInfoCategory(id: String!): InfoCategory
+  deleteInformation(id: String!): Information
+  deleteSocial(id: String!): Social
+  updateInfoCategory(id: String!, input: UpdateInfoCategoryInput!): InfoCategory
+  updateInformation(id: String!, input: UpdateInformationInput!): Information
+  updateProfile(input: UpdateProfileInput!): Profile!
+  updateSocial(id: String!, input: UpdateSocialInput!): Social
+}
+
+type Profile {
+  city: String!
+  country: String!
+  description: String!
+  email: String!
+  id: ID!
+  image: String
+  info: [InfoCategory!]!
+  name: String!
+  phone: String!
+  portfolio: String
+  socials: [Social!]!
+}
+
+type Query {
+  getInformations(categoryId: String!): [Information!]!
+  infoCategories: [InfoCategory!]!
+  profile: Profile!
+  socials: [Social!]!
+}
+
+type Social {
+  icon: String!
+  id: ID!
+  label: String!
+  name: String!
+  order: Int
+  profileId: Int!
+  state: Boolean!
+  url: String!
+}
+
+input UpdateInfoCategoryInput {
+  icon: String
+  name: String
+  order: Int
+  state: Boolean
+}
+
+input UpdateInformationInput {
+  city: String
+  content: String
+  country: String
+  description: String
+  endDate: DateTime
+  institution: String
+  institutionUrl: String
+  level: Int
+  startDate: DateTime
+  state: Boolean
+  url: String
+}
+
+input UpdateProfileInput {
+  city: String
+  country: String
+  description: String
+  email: String
+  image: String
+  name: String
+  phone: String
+  portfolio: String
+}
+
+input UpdateSocialInput {
+  icon: String
+  label: String
+  name: String
+  order: Float
+  state: Boolean
+  url: String
+}

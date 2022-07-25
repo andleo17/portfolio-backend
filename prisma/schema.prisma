@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.db"
+}
+
+model Profile {
+  id          Int            @id
+  city        String
+  country     String
+  description String
+  email       String
+  image       String?
+  info        InfoCategory[]
+  name        String
+  phone       String
+  portfolio   String?
+  socials     Social[]
+}
+
+model Social {
+  id        String  @id @default(cuid())
+  icon      String
+  label     String
+  name      String
+  order     Int?
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+  state     Boolean @default(true)
+  url       String
+}
+
+model InfoCategory {
+  id          String        @id @default(cuid())
+  icon        String?
+  information Information[]
+  name        String
+  order       Int?
+  profile     Profile       @relation(fields: [profileId], references: [id])
+  profileId   Int
+  state       Boolean       @default(true)
+}
+
+model Information {
+  id             String       @id @default(cuid())
+  category       InfoCategory @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  city           String?
+  content        String
+  country        String?
+  description    String?
+  endDate        DateTime?
+  institution    String?
+  institutionUrl String?
+  level          Int?
+  startDate      DateTime?
+  state          Boolean      @default(true)
+  order          Int?
+  url            String?
+}
