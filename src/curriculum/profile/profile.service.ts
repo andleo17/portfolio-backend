@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InfoCategory, Prisma, Profile, Social } from '@prisma/client';
+import { InfoCategory, Prisma, Profile, Project, Social } from '@prisma/client';
+import { ProjectService } from 'curriculum/project/project.service';
 import { PrismaService } from 'database/sqlite/prisma.service';
 import { InfoCategoryService } from '../info-category/info-category.service';
 import { SocialService } from '../social/social.service';
@@ -10,6 +11,7 @@ export class ProfileService {
     private readonly prisma: PrismaService,
     private readonly categoryService: InfoCategoryService,
     private readonly socialService: SocialService,
+    private readonly projectService: ProjectService,
   ) {}
 
   /**
@@ -19,6 +21,15 @@ export class ProfileService {
    **/
   async getInfoCategories(): Promise<InfoCategory[]> {
     return this.categoryService.getInfoCategories();
+  }
+
+  /**
+   * Get all projects asociated to profile.
+   *
+   * @returns The projects asociated to profile.
+   */
+  async getProjects(): Promise<Project[]> {
+    return this.projectService.getProjects();
   }
 
   /**

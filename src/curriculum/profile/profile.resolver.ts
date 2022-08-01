@@ -7,6 +7,7 @@ import {
 } from './profile.model';
 import { SocialModel } from '../social/social.model';
 import { ProfileService } from './profile.service';
+import { ProjectModel } from 'curriculum/project/project.model';
 
 @Resolver(ProfileModel)
 export class ProfileResolver {
@@ -15,6 +16,11 @@ export class ProfileResolver {
   @ResolveField(() => [InfoCategoryModel])
   async info(): Promise<InfoCategoryModel[]> {
     return this.profileService.getInfoCategories();
+  }
+
+  @ResolveField(() => [ProjectModel])
+  async projects(): Promise<ProjectModel[]> {
+    return this.profileService.getProjects();
   }
 
   @ResolveField(() => [SocialModel])

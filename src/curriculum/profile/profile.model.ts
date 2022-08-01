@@ -1,4 +1,5 @@
 import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+import { ProjectModel } from 'curriculum/project/project.model';
 import { InfoCategoryModel } from '../info-category/info-category.model';
 import { SocialModel } from '../social/social.model';
 
@@ -33,6 +34,9 @@ export class ProfileModel {
 
   @Field({ nullable: true })
   portfolio?: string;
+
+  @Field(() => [ProjectModel])
+  projects?: ProjectModel[];
 
   @Field(() => [SocialModel])
   socials?: SocialModel[];

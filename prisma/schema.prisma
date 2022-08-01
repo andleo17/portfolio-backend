@@ -21,6 +21,7 @@ model Profile {
   name        String
   phone       String
   portfolio   String?
+  projects    Project[]
   socials     Social[]
 }
 
@@ -58,10 +59,11 @@ model Information {
   endDate       DateTime?
   institution   Institution? @relation(fields: [institutionId], references: [id])
   institutionId String?
+  knowledge     Knowledge?
   level         Int?
+  order         Int?
   startDate     DateTime?
   state         Boolean      @default(true)
-  order         Int?
   url           String?
 }
 
@@ -69,5 +71,33 @@ model Institution {
   id          String        @id @default(cuid())
   information Information[]
   name        String
+  url         String?
+}
+
+model KnowledgeCategory {
+  id         String      @id @default(cuid())
+  knowledges Knowledge[]
+  name       String
+}
+
+model Knowledge {
+  informationId       String            @id
+  icon                String
+  information         Information       @relation(fields: [informationId], references: [id])
+  knowledgeCategory   KnowledgeCategory @relation(fields: [knowledgeCategoryId], references: [id])
+  knowledgeCategoryId String
+  projects            Project[]
+}
+
+model Project {
+  id          String      @id @default(cuid())
+  description String
+  image       String?
+  knowledges  Knowledge[]
+  name        String
+  order       Int?
+  profile     Profile     @relation(fields: [profileId], references: [id])
+  profileId   Int
+  state       Boolean     @default(true)
   url         String?
 }

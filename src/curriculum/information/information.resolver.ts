@@ -7,6 +7,7 @@ import {
   Root,
 } from '@nestjs/graphql';
 import { InstitutionModel } from 'curriculum/institution/institution.model';
+import { KnowledgeModel } from 'curriculum/knowledge/knowledge.model';
 import {
   CreateInformationInput,
   InformationModel,
@@ -23,6 +24,11 @@ export class InformationResolver {
     @Root() { id }: InformationModel,
   ): Promise<InstitutionModel> {
     return this.informationService.getInstitution(id);
+  }
+
+  @ResolveField(() => KnowledgeModel, { nullable: true })
+  async knowledge(@Root() { id }: InformationModel): Promise<KnowledgeModel> {
+    return this.informationService.getKnowledge(id);
   }
 
   @Query(() => [InformationModel])

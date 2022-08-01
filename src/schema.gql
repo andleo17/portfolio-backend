@@ -29,6 +29,16 @@ input CreateInstitutionInput {
   url: String
 }
 
+input CreateKnowledgeCategoryInput {
+  name: String!
+}
+
+input CreateKnowledgeInput {
+  icon: String!
+  informationId: ID!
+  knowledgeCategoryId: String!
+}
+
 input CreateProfileInput {
   city: String!
   country: String!
@@ -38,6 +48,16 @@ input CreateProfileInput {
   name: String!
   phone: String!
   portfolio: String
+}
+
+input CreateProjectInput {
+  description: String!
+  image: String
+  knowledges: [ID!]!
+  name: String!
+  order: Int
+  state: Boolean
+  url: String
 }
 
 input CreateSocialInput {
@@ -74,6 +94,7 @@ type Information {
   id: ID!
   institution: Institution
   institutionId: String
+  knowledge: Knowledge
   level: Int
   order: Int
   startDate: DateTime
@@ -87,20 +108,44 @@ type Institution {
   url: String
 }
 
+type Knowledge {
+  icon: String!
+  information: Information!
+  informationId: ID!
+  knowledgeCategory: KnowledgeCategory!
+  knowledgeCategoryId: String!
+  projects: [Project!]!
+}
+
+type KnowledgeCategory {
+  id: ID!
+  knowledges: [Knowledge!]!
+  name: String!
+}
+
 type Mutation {
   createInfoCategory(input: CreateInfoCategoryInput!): InfoCategory!
   createInformation(input: CreateInformationInput!): Information!
   createInstitution(input: CreateInstitutionInput!): Institution!
+  createKnowledge(input: CreateKnowledgeInput!): Knowledge!
+  createKnowledgeCategory(input: CreateKnowledgeCategoryInput!): KnowledgeCategory!
   createProfile(input: CreateProfileInput!): Profile!
+  createProject(input: CreateProjectInput!): Project!
   createSocial(input: CreateSocialInput!): Social!
   deleteInfoCategory(id: String!): InfoCategory
   deleteInformation(id: String!): Information
   deleteInstitution(id: String!): Institution
+  deleteKnowledge(id: String!): Knowledge
+  deleteKnowledgeCategory(id: String!): KnowledgeCategory!
+  deleteProject(id: String!): Project!
   deleteSocial(id: String!): Social
   updateInfoCategory(id: String!, input: UpdateInfoCategoryInput!): InfoCategory
   updateInformation(id: String!, input: UpdateInformationInput!): Information
   updateInstitution(id: String!, input: UpdateInstitutionInput!): Institution
+  updateKnowledge(id: String!, input: UpdateKnowledgeInput!): Knowledge
+  updateKnowledgeCategory(id: String!, input: UpdateKnowledgeCategoryInput!): KnowledgeCategory!
   updateProfile(input: UpdateProfileInput!): Profile!
+  updateProject(id: String!, input: UpdateProjectInput!): Project!
   updateSocial(id: String!, input: UpdateSocialInput!): Social
 }
 
@@ -115,12 +160,27 @@ type Profile {
   name: String!
   phone: String!
   portfolio: String
+  projects: [Project!]!
   socials: [Social!]!
+}
+
+type Project {
+  description: String!
+  id: ID!
+  image: String
+  knowledges: [Knowledge!]!
+  name: String!
+  order: Int
+  state: Boolean!
+  url: String
 }
 
 type Query {
   getInformations(categoryId: String!): [Information!]!
   getInstitutions: [Institution!]!
+  getKnowledgeCategories: [KnowledgeCategory!]!
+  getKnowledges: [Knowledge!]!
+  getProjects: [Project!]!
   infoCategories: [InfoCategory!]!
   profile: Profile!
   socials: [Social!]!
@@ -152,6 +212,7 @@ input UpdateInformationInput {
   endDate: DateTime
   institutionId: String
   level: Int
+  order: Int
   startDate: DateTime
   state: Boolean
   url: String
@@ -160,6 +221,16 @@ input UpdateInformationInput {
 input UpdateInstitutionInput {
   name: String
   url: String
+}
+
+input UpdateKnowledgeCategoryInput {
+  name: String
+}
+
+input UpdateKnowledgeInput {
+  icon: String
+  informationId: String
+  knowledgeCategoryId: String
 }
 
 input UpdateProfileInput {
@@ -171,6 +242,16 @@ input UpdateProfileInput {
   name: String
   phone: String
   portfolio: String
+}
+
+input UpdateProjectInput {
+  description: String
+  image: String
+  knowledges: [ID!]
+  name: String
+  order: Int
+  state: Boolean
+  url: String
 }
 
 input UpdateSocialInput {
